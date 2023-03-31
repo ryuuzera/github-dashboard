@@ -11,7 +11,7 @@ import { ContentProvider } from '@/hooks/main-menu';
 interface IRefs {
   user: any;
 }
-const MainLayout = () => {
+const MainLayout = (props: any) => {
   const styleProps = () => {
     return {
       props: {

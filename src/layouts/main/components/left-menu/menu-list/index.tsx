@@ -3,6 +3,7 @@ import { ContentProvider, useContent } from '@/hooks/main-menu';
 import { Github } from 'lucide-react';
 import { ReactNode, useState } from 'react';
 import styles from './styles';
+import Dashboard from '@/layouts/dashboard';
 
 interface MenuItemProps {
   id: string;
@@ -75,7 +76,7 @@ const MenuList = () => {
     {
       id: 'dashboard',
       label: 'dashboard',
-      onClick: () => handleClick('dashboard', (<>Hello world</>)),
+      onClick: () => handleClick('dashboard', (<Dashboard />)),
       icon: <Github color={Colors.font.main} />,
     },
     {

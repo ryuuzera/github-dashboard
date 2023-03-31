@@ -2,6 +2,7 @@ import Colors from '@/assets/theming/colors';
 import * as Avatar from '@radix-ui/react-avatar';
 import { styled } from '@stitches/react';
 import MenuList from './menu-list';
+import { useUser } from '@/hooks/user';
 
 const AvatarRoot = styled(Avatar.Root, {
   borderBottom: '1px solid gainsboro',
@@ -36,6 +37,7 @@ const AvatarFallback = styled(Avatar.Fallback, {
 });
 
 const LeftMenu = (props: any) => {
+  const user = useUser().currentUser;
   return (
     <>
       <div className='container'>
@@ -44,8 +46,8 @@ const LeftMenu = (props: any) => {
           <AvatarRoot className='avatar-root'>
             <AvatarImage
               className='avatarImage'
-              src='https://github.com/ryuuzera.png'
-              alt=''
+              src={user.avatar_url}
+              alt={user.name}
             />
             <AvatarFallback className='avatarFallback' delayMs={600}>
               CT
@@ -53,8 +55,8 @@ const LeftMenu = (props: any) => {
           </AvatarRoot>
           </div>
           <div className="user-title">
-            <h1>UserName</h1>
-            <h2>nickname</h2>
+            <h1>{user.name}</h1>
+            <h2>{user.login}</h2>
           </div>
         </div>
         <div className='menu'>

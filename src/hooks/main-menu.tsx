@@ -1,3 +1,4 @@
+import Dashboard from '@/layouts/dashboard';
 import { createContext, useContext, useState } from 'react';
 
 type ContentType = React.ReactNode;
@@ -11,7 +12,7 @@ const ContentContext = createContext<ContentContextType | undefined>(undefined);
 
 export function ContentProvider({ children }: { children: React.ReactNode }) {
   const [state, setState] = useState<any>({
-    content: null
+    content: <Dashboard />
   });
 
   const setContent = (content: any) => {
