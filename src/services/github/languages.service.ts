@@ -7,12 +7,12 @@ export type LanguageMap = Record<string, string>;
 
 class Languages extends Github {
   //#region private methods
-  private async fetchLanguageColors(): Promise<LanguageColorMap> {
+  private async fetchLanguageColors(): Promise<LanguageMap> {
     const response = await request.get(
       'https://raw.githubusercontent.com/github/linguist/master/lib/linguist/languages.yml'
     );
     const languages = yaml.load(response.data.toString()) as Record<string, any>;
-    const languageColors: LanguageColorMap = {};
+    const languageColors: LanguageMap = {};
 
     for (const language in languages) {
       if (languages.hasOwnProperty(language)) {
@@ -67,16 +67,8 @@ class Languages extends Github {
     return sortedObj;
   }
   getLanguageColor(language: string, callback: (color: string | undefined) => void): void {
-    const timeout = 5000;
-    let fail = false;
-    setTimeout(() => {
-      fail = true;
-    }, timeout);
-
     this.getLanguageColorAsync(language.toLowerCase()).then((color) => {
-      if (!fail) {
         callback(color);
-      }
     });
   }
   //#endregion

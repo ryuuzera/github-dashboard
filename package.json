@@ -25,6 +25,7 @@
     "react": "18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "18.2.0",
+    "react-icons": "^4.8.0",
     "shiki": "^0.14.1",
     "stitches": "^1.2.11",
     "typescript": "5.0.3"
