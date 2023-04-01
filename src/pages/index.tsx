@@ -3,12 +3,24 @@ import { MainLayout } from '@/layouts/main';
 import request from '@/services/http/axios/http.instance';
 import { Inter } from 'next/font/google';
 import Head from 'next/head';
+import { useEffect } from 'react';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Home(props: any) {
   const user = useUser();
-  user.setUser(props.user);
+
+  useEffect(() => {
+    (async () => {
+      const updatedUser = await request.get(`https://api.github.com/users/ryuuzera`, {
+        headers: {
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
+        },
+      });
+      user.setUser(updatedUser.data);
+    })();
+  }, []);
+  // user.setUser(props.user);
   return (
     <>
       <Head>
@@ -25,25 +37,25 @@ export default function Home(props: any) {
   );
 }
 
-export async function getServerSideProps(ctx: any) {
-  try {
-    const user = await request.get(`https://api.github.com/users/ryuuzera`, {
-      headers: {
-        Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-      },
-    });
-    return {
-      props: {
-        user: user.data,
-      },
-    };
-  } catch (error: any) {
-    return {
-      redirect: {
-        destination: '/404',
-        permanent: false,
-      },
-      props: {},
-    };
-  }
-}
+// export async function getServerSideProps(ctx: any) {
+//   try {
+//     const user = await request.get(`https://api.github.com/users/ryuuzera`, {
+//       headers: {
+//         Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+//       },
+//     });
+//     return {
+//       props: {
+//         user: user.data,
+//       },
+//     };
+//   } catch (error: any) {
+//     return {
+//       redirect: {
+//         destination: '/404',
+//         permanent: false,
+//       },
+//       props: {},
+//     };
+//   }
+// }

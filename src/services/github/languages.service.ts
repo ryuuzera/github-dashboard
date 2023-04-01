@@ -1,8 +1,12 @@
 import { User } from '@/hooks/user';
 import yaml from 'js-yaml';
 import request from '../http/axios/http.instance';
-type LanguageColorMap = Record<string, string>;
-class Github {
+import Github from './github.class';
+
+export type LanguageMap = Record<string, string>;
+
+class Languages extends Github {
+  //#region private methods
   private async fetchLanguageColors(): Promise<LanguageColorMap> {
     const response = await request.get(
       'https://raw.githubusercontent.com/github/linguist/master/lib/linguist/languages.yml'
@@ -18,10 +22,16 @@ class Github {
           languageColors[languageName] = `${color}`;
         }
       }
-    }   
+    }
     return languageColors;
   }
+  private async getLanguageColorAsync(language: string): Promise<string | undefined> {
+    const color = await this.fetchLanguageColors();
+    return color[language.toLowerCase()];
+  }
+  //#endregion
 
+  //#region public methods
   async getMostUsedLanguages(currentUser: User): Promise<any> {
     const repos = await request.get(`${currentUser.repos_url}`, {
       headers: {
@@ -56,24 +66,20 @@ class Github {
     );
     return sortedObj;
   }
-  private async getLanguageColorAsync(language: string): Promise<string | undefined> {
-    const color = await this.fetchLanguageColors();
-    return color[language.toLowerCase()];
-  }
-
   getLanguageColor(language: string, callback: (color: string | undefined) => void): void {
     const timeout = 5000;
     let fail = false;
     setTimeout(() => {
       fail = true;
     }, timeout);
-  
+
     this.getLanguageColorAsync(language.toLowerCase()).then((color) => {
       if (!fail) {
         callback(color);
       }
     });
   }
+  //#endregion
 }
 
-export default Github;
+export default Languages;
