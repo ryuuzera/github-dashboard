@@ -30,15 +30,15 @@ function LanguageList() {
         }
       }
 
-      const totalBytes = Object.values(tempLanguages).reduce((total, bytes) => total + bytes, 0);
+      const totalBytes: any = Object.values(tempLanguages).reduce((total: any, bytes: any) => total + bytes, 0);
 
       const tempLanguagesPercentages: any = {};
       for (const [lang, bytes] of Object.entries(tempLanguages)) {
-        const percentage = (bytes / totalBytes) * 100;
+        const percentage = (bytes as any / totalBytes) * 100;
         tempLanguagesPercentages[lang] = percentage;
       }
 
-      const sortedObj = Object.fromEntries(Object.entries(tempLanguagesPercentages).sort(([, a], [, b]) => b - a));
+      const sortedObj = Object.fromEntries(Object.entries(tempLanguagesPercentages).sort(([, a]: any, [, b]): any => b as any - a ));
       setLanguages(sortedObj);
       setLoading(false);
     })();
@@ -51,7 +51,7 @@ function LanguageList() {
   return (
     <>
      <ul>
-      {Object.entries(languages).map(([lang, percentage]) => (
+      {Object.entries(languages).map(([lang, percentage]: any) => (
         <li key={lang}>
           {lang}: {percentage.toFixed(2)}%
         </li>
