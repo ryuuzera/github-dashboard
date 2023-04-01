@@ -7,7 +7,7 @@ export type LanguageMap = Record<string, string>;
 
 class Languages extends Github {
   //#region private methods
-  private async fetchLanguageColors(): Promise<LanguageMap> {
+  public async fetchLanguageColors(): Promise<LanguageMap> {
     const response = await request.get(
       'https://raw.githubusercontent.com/github/linguist/master/lib/linguist/languages.yml'
     );
@@ -68,7 +68,7 @@ class Languages extends Github {
   }
   getLanguageColor(language: string, callback: (color: string | undefined) => void): void {
     this.getLanguageColorAsync(language.toLowerCase()).then((color) => {
-        callback(color);
+      callback(color);
     });
   }
   //#endregion

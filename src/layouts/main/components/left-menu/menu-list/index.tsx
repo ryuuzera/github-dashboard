@@ -68,7 +68,6 @@ const MenuList = () => {
   const { setContent } = useContent();
 
   const handleClick = (id: string, content: ReactNode) => {
-    console.log(`O item "${id}" foi clicado!`);
     setContent(content);
   };
 

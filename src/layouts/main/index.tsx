@@ -13,20 +13,14 @@ interface IRefs {
   user: any;
 }
 const MainLayout = (props: any) => {
-  const styleProps = () => {
-    return {
-      props: {},
-    };
-  };
   const refs: IRefs = {
     user: useRef(),
   };
 
-  const { currentUser, setUser } = useUser();
+  const { setUser } = useUser();
 
   const handleFindUser = (e: any) => {
     e.preventDefault();
-    console.log(`clicou`);
     (async () => {
       const user = await request.get(`https://api.github.com/users/${refs.user.current.value}`, {
         headers: {

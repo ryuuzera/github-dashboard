@@ -1,6 +1,4 @@
-import Colors from '@/assets/theming/colors';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
 import Images from '../../assets/next-image/exports';
 import LoadingText from './components/loading-text';
 
@@ -31,7 +29,6 @@ const Loading = () => {
           }
         `}
       </style>
-      
     </>
   );
 };
