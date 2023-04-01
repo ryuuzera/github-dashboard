@@ -1,4 +1,4 @@
-import { IHttpService } from "./interface";
+import { IHttpService } from './@interfaces/interface';
 
 class Request {
   private httpService: IHttpService;
@@ -7,24 +7,24 @@ class Request {
     this.httpService = httpService;
   }
 
-  async get(url: string): Promise<any> {
-    const response = await this.httpService.get(url);
-    return response.data;
+  async get(url: string, data?: any): Promise<any> {
+    const response = await this.httpService.get(url, data);
+    return response;
   }
 
   async post(url: string, data?: any): Promise<any> {
     const response = await this.httpService.post(url, data);
-    return response.data;
+    return response;
   }
 
   async put(url: string, data?: any): Promise<any> {
     const response = await this.httpService.put(url, data);
-    return response.data;
+    return response;
   }
 
   async delete(url: string): Promise<any> {
     const response = await this.httpService.delete(url);
-    return response.data;
+    return response;
   }
 }
 

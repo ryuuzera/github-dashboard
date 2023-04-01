@@ -1,9 +1,9 @@
+import Colors from '@/assets/theming/colors';
 import { useUser } from '@/hooks/user';
-import AxiosService from '@/services/http/http.axios.service';
+import AxiosService from '@/services/http/axios/http.axios.service';
 import { useEffect, useState } from 'react';
 import Loading from '../loading';
 import LanguageList from './components/language-list';
-import Colors from '@/assets/theming/colors';
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -50,7 +50,7 @@ const Dashboard = () => {
           <div className='container'>
             <div className='center'>
               <div className='card-languages'>
-                <LanguageList />
+                <LanguageList isLoading={isLoading} />
               </div>
               <div className='card-commits'>{userData.commits}</div>
               <div className='card-followers'>{userData.followers}</div>
@@ -68,8 +68,12 @@ const Dashboard = () => {
               width: calc(90% - 2px);
               height: calc(90% - 2px);
               display: flex;
-              {/* align-items: center; */}
-              {/* justify-content: center; */}
+               {
+                /* align-items: center; */
+              }
+               {
+                /* justify-content: center; */
+              }
               border: 1px solid gray;
               flex-direction: column;
             }

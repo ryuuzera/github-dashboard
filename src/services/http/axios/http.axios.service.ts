@@ -1,5 +1,5 @@
-import axios, { AxiosInstance, AxiosResponse } from "axios";
-import { IHttpService } from "./interface";
+import axios, { AxiosInstance } from 'axios';
+import { IHttpService } from '../@interfaces/interface';
 
 class AxiosService implements IHttpService {
   private axiosInstance: AxiosInstance;

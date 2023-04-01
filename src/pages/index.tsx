@@ -1,6 +1,6 @@
 import { useUser } from '@/hooks/user';
 import { MainLayout } from '@/layouts/main';
-import AxiosService from '@/services/http/http.axios.service';
+import request from '@/services/http/axios/http.instance';
 import { Inter } from 'next/font/google';
 import Head from 'next/head';
 
@@ -27,19 +27,17 @@ export default function Home(props: any) {
 
 export async function getServerSideProps(ctx: any) {
   try {
-    const user = await new AxiosService().get(`https://api.github.com/users/ryuuzera`, {
+    const user = await request.get(`https://api.github.com/users/ryuuzera`, {
       headers: {
         Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
       },
     });
-    console.log(user.data);
     return {
       props: {
         user: user.data,
       },
     };
   } catch (error: any) {
-    console.log(error)
     return {
       redirect: {
         destination: '/404',
