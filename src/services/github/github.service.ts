@@ -1,7 +1,27 @@
-import { User } from "@/hooks/user";
-import request from '../http/axios/http.instance'
-
+import { User } from '@/hooks/user';
+import yaml from 'js-yaml';
+import request from '../http/axios/http.instance';
+type LanguageColorMap = Record<string, string>;
 class Github {
+  private async fetchLanguageColors(): Promise<LanguageColorMap> {
+    const response = await request.get(
+      'https://raw.githubusercontent.com/github/linguist/master/lib/linguist/languages.yml'
+    );
+    const languages = yaml.load(response.data.toString()) as Record<string, any>;
+    const languageColors: LanguageColorMap = {};
+
+    for (const language in languages) {
+      if (languages.hasOwnProperty(language)) {
+        const color = languages[language].color;
+        if (color) {
+          const languageName = language.toLowerCase();
+          languageColors[languageName] = `${color}`;
+        }
+      }
+    }   
+    return languageColors;
+  }
+
   async getMostUsedLanguages(currentUser: User): Promise<any> {
     const repos = await request.get(`${currentUser.repos_url}`, {
       headers: {
@@ -34,7 +54,25 @@ class Github {
     const sortedObj = Object.fromEntries(
       Object.entries(tempLanguagesPercentages).sort(([, a]: any, [, b]): any => (b as any) - a)
     );
-    return sortedObj
+    return sortedObj;
+  }
+  private async getLanguageColorAsync(language: string): Promise<string | undefined> {
+    const color = await this.fetchLanguageColors();
+    return color[language.toLowerCase()];
+  }
+
+  getLanguageColor(language: string, callback: (color: string | undefined) => void): void {
+    const timeout = 5000;
+    let fail = false;
+    setTimeout(() => {
+      fail = true;
+    }, timeout);
+  
+    this.getLanguageColorAsync(language.toLowerCase()).then((color) => {
+      if (!fail) {
+        callback(color);
+      }
+    });
   }
 }
 

@@ -50,7 +50,7 @@ const Dashboard = () => {
           <div className='container'>
             <div className='center'>
               <div className='card-languages'>
-                <LanguageList isLoading={isLoading} />
+                <LanguageList />
               </div>
               <div className='card-commits'>{userData.commits}</div>
               <div className='card-followers'>{userData.followers}</div>
