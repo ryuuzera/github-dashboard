@@ -30,7 +30,7 @@ export default css`
   .window {
     display: flex;
     flex-direction: column;
-    background: ${Colors.background['100']};
+    background: ${Colors.background['300']};
     border: 0.5px solid ${Colors.font.main};
     height: 80%;
     width: 90%;
