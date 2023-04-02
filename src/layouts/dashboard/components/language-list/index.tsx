@@ -6,7 +6,7 @@ import { IconContext } from 'react-icons/lib';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-function LanguageList({ languages, languageColors }: any) {
+const LanguageList = ({ languages, languageColors }: any) => {
   const [chartProps, setChartProps] = useState<any>({});
   const [chartOptions, setChartOptions] = useState<any>({
     plugins: {
@@ -103,5 +103,5 @@ function LanguageList({ languages, languageColors }: any) {
       </style>
     </>
   );
-}
+};
 export default LanguageList;
