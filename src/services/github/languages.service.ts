@@ -6,31 +6,6 @@ import Github from './github.class';
 export type LanguageMap = Record<string, string>;
 
 class Languages extends Github {
-  //#region private methods
-  public async fetchLanguageColors(): Promise<LanguageMap> {
-    const response = await request.get(
-      'https://raw.githubusercontent.com/github/linguist/master/lib/linguist/languages.yml'
-    );
-    const languages = yaml.load(response.data.toString()) as Record<string, any>;
-    const languageColors: LanguageMap = {};
-
-    for (const language in languages) {
-      if (languages.hasOwnProperty(language)) {
-        const color = languages[language].color;
-        if (color) {
-          const languageName = language.toLowerCase();
-          languageColors[languageName] = `${color}`;
-        }
-      }
-    }
-    return languageColors;
-  }
-  private async getLanguageColorAsync(language: string): Promise<string | undefined> {
-    const color = await this.fetchLanguageColors();
-    return color[language.toLowerCase()];
-  }
-  //#endregion
-
   //#region public methods
   async getMostUsedLanguages(currentUser: User): Promise<any> {
     const repos = await request.get(`${currentUser.repos_url}`, {
@@ -66,10 +41,24 @@ class Languages extends Github {
     );
     return sortedObj;
   }
-  getLanguageColor(language: string, callback: (color: string | undefined) => void): void {
-    this.getLanguageColorAsync(language.toLowerCase()).then((color) => {
-      callback(color);
-    });
+
+  async getLanguageColors(): Promise<LanguageMap> {
+    const response = await request.get(
+      'https://raw.githubusercontent.com/github/linguist/master/lib/linguist/languages.yml'
+    );
+    const languages = yaml.load(response.data.toString()) as Record<string, any>;
+    const languageColors: LanguageMap = {};
+
+    for (const language in languages) {
+      if (languages.hasOwnProperty(language)) {
+        const color = languages[language].color;
+        if (color) {
+          const languageName = language.toLowerCase();
+          languageColors[languageName] = `${color}`;
+        }
+      }
+    }
+    return languageColors;
   }
   //#endregion
 }

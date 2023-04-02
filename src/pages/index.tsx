@@ -1,6 +1,6 @@
 import { useUser } from '@/hooks/user';
 import { MainLayout } from '@/layouts/main';
-import request from '@/services/http/axios/http.instance';
+import GithubUsers from '@/services/github/github.users.service';
 import { Inter } from 'next/font/google';
 import Head from 'next/head';
 import { useEffect } from 'react';
@@ -12,15 +12,10 @@ export default function Home(props: any) {
 
   useEffect(() => {
     (async () => {
-      const updatedUser = await request.get(`https://api.github.com/users/ryuuzera`, {
-        headers: {
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
-        },
-      });
-      user.setUser(updatedUser.data);
+      const updatedUser = await new GithubUsers().getUserbyName('ryuuzera');
+      user.setUser(updatedUser);
     })();
   }, []);
-  // user.setUser(props.user);
   return (
     <>
       <Head>
@@ -36,26 +31,3 @@ export default function Home(props: any) {
     </>
   );
 }
-
-// export async function getServerSideProps(ctx: any) {
-//   try {
-//     const user = await request.get(`https://api.github.com/users/ryuuzera`, {
-//       headers: {
-//         Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-//       },
-//     });
-//     return {
-//       props: {
-//         user: user.data,
-//       },
-//     };
-//   } catch (error: any) {
-//     return {
-//       redirect: {
-//         destination: '/404',
-//         permanent: false,
-//       },
-//       props: {},
-//     };
-//   }
-// }

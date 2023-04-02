@@ -1,10 +1,12 @@
 import Colors from '@/assets/theming/colors';
 import { useUser } from '@/hooks/user';
+import GithubUsers from '@/services/github/github.users.service';
 import Github, { LanguageMap } from '@/services/github/languages.service';
-import AxiosService from '@/services/http/axios/http.axios.service';
 import { useEffect, useState } from 'react';
 import Loading from '../loading';
 import LanguageList from './components/language-list';
+
+
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -17,28 +19,14 @@ const Dashboard = () => {
     (async () => {
       await new Promise(async (resolve) => {
         try {
-          const commitsResponse = await new AxiosService().get(
-            `https://api.github.com/search/commits?q=author:${currentUser.login}`,
-            {
-              headers: {
-                Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
-              },
-            }
-          );
-          const followersResponse = await new AxiosService().get(currentUser.followers_url, {
-            headers: {
-              Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
-            },
-          });
+          const commitsResponse = await new GithubUsers().getUserCommitsByLogin(currentUser.login);
+          const followersResponse = await new GithubUsers().getUserFollowers(currentUser);
+          const commits = commitsResponse.total_count;
 
-          const commits = commitsResponse.data.total_count;
+          const followers = followersResponse.length;
 
-          const followers = followersResponse.data.length;
-
-          const colors = await new Github().fetchLanguageColors()
+          const colors = await new Github().getLanguageColors();
           setLanguagesColors(colors);
-          console.log(colors);
-
           setUserData({ commits, followers });
           resolve(true);
         } catch (error) {
