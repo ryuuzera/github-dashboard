@@ -7,7 +7,8 @@ const Colors = {
   },
   font: {
     main: `#444c56`,
-    hightlight: `#aebac8`
+    hightlight: `#aebac8`,
+    colored: '#539bf5'
   }
 };
 

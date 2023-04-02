@@ -30,7 +30,7 @@ const Dashboard = () => {
           const followers = followersResponse.length;
 
           const colors = await new Github().getLanguageColors();
-          setLanguagesColors(colors);
+          setLanguagesColors({ ...colors, others: '#444444' });
           setUserData({ commits, followers });
           setPinnedRepos(pinnedResposResponse);
           resolve(true);
@@ -77,7 +77,7 @@ const Dashboard = () => {
                 <LanguageList languages={languages} languageColors={languageColors} user={currentUser} />
               </div>
               <div className='highlights-content'>
-                <h1>{`Highlights: `}</h1>
+                <h1>{`Highlights `}</h1>
                 <div className='pinned-repos'>
                   {pinnedRepos.map((repo) => {
                     return <PinnedRepoCard repo={repo} />;
@@ -92,7 +92,15 @@ const Dashboard = () => {
                 </div>
               </div>
 
-              <div className='card-followers'>{userData.followers}</div>
+              <div className='card-information'>
+                <div className='title'>
+                  <h1>About</h1>
+                </div>
+                <div className="content">
+                {userData.followers}
+                </div>
+                
+              </div>
             </div>
           )}
         </div>
@@ -109,10 +117,9 @@ const Dashboard = () => {
         }
         .center {
           visibility: ${isLoading ? 'hidden' : 'visible'};
-          width: calc(90% - 2px);
-          height: calc(90% - 2px);
+          width: calc(100% - 2px);
+          height: calc(100% - 2px);
           display: flex;
-          border: 1px solid gray;
           flex-direction: column;
         }
         .card-languages {
@@ -121,7 +128,7 @@ const Dashboard = () => {
           display: flex;
           flex-direction: column;
           padding: 15px;
-          height: 200px;
+          height: 170px;
           margin-top: 15px;
           margin-left: 15px;
           margin-right: 15px;
@@ -148,7 +155,9 @@ const Dashboard = () => {
         .highlights-content h1 {
           width: 100%;
           height: 10%;
-          margin-bottom: 15px;
+          margin-bottom: 10px;
+          margin-top: 15px;
+          font-weight: bold;
         }
         .pinned-repos {
           display: flex;
@@ -158,9 +167,30 @@ const Dashboard = () => {
           height: 90%;
           align-items: center;
           justify-content: space-evenly;
-           {
-            /* background: pink; */
-          }
+        }
+        .card-information {
+          background: ${Colors.background[100]};
+          border: 1px solid ${Colors.background[400]};
+          display: flex;
+          flex-direction: column;
+          padding: 0px;
+          height: 90px;
+          margin-top: 15px;
+          margin-left: 15px;
+          margin-right: 15px;
+          border-radius: 8px;
+          color: ${Colors.font.hightlight};
+        }
+        .card-information .title {
+          display: flex;
+          flex-direction: row;
+          margin-top: 10px;
+          margin-left: 10px;
+          width: calc(10% - 10px);
+        }
+        .card-information .title h1 {
+          font-size: 1rem;
+          font-weight: bold
         }
       `}</style>
     </>

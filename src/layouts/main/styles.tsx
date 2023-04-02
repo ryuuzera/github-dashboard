@@ -35,6 +35,7 @@ export default css`
     height: 80%;
     width: 90%;
     max-width: 1080px;
+    min-height: 600px;
     z-index: 3;
     border-radius: 12px;
   }
