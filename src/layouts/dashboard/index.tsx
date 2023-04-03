@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import Loading from '../loading';
 import LanguageList from './components/language-list';
 import PinnedRepoCard from './components/pinned-repos';
+import About from './components/about';
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -93,13 +94,7 @@ const Dashboard = () => {
               </div>
 
               <div className='card-information'>
-                <div className='title'>
-                  <h1>About</h1>
-                </div>
-                <div className="content">
-                {userData.followers}
-                </div>
-                
+                <About user={currentUser} />
               </div>
             </div>
           )}
@@ -181,17 +176,7 @@ const Dashboard = () => {
           border-radius: 8px;
           color: ${Colors.font.hightlight};
         }
-        .card-information .title {
-          display: flex;
-          flex-direction: row;
-          margin-top: 10px;
-          margin-left: 10px;
-          width: calc(10% - 10px);
-        }
-        .card-information .title h1 {
-          font-size: 1rem;
-          font-weight: bold
-        }
+       
       `}</style>
     </>
   );
