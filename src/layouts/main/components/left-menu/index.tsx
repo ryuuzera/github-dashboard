@@ -1,8 +1,8 @@
 import Colors from '@/assets/theming/colors';
+import { useUser } from '@/hooks/user';
 import * as Avatar from '@radix-ui/react-avatar';
 import { styled } from '@stitches/react';
 import MenuList from './menu-list';
-import { useUser } from '@/hooks/user';
 
 const AvatarRoot = styled(Avatar.Root, {
   borderBottom: '1px solid gainsboro',
@@ -42,19 +42,15 @@ const LeftMenu = (props: any) => {
     <>
       <div className='container'>
         <div className='top'>
-          <div className="avatar">
-          <AvatarRoot className='avatar-root'>
-            <AvatarImage
-              className='avatarImage'
-              src={user.avatar_url}
-              alt={user.name}
-            />
-            <AvatarFallback className='avatarFallback' delayMs={600}>
-              CT
-            </AvatarFallback>
-          </AvatarRoot>
+          <div className='avatar'>
+            <AvatarRoot className='avatar-root'>
+              <AvatarImage className='avatarImage' src={user.avatar_url} alt={user.name} />
+              <AvatarFallback className='avatarFallback' delayMs={600}>
+                CT
+              </AvatarFallback>
+            </AvatarRoot>
           </div>
-          <div className="user-title">
+          <div className='user-title'>
             <h1>{user.name}</h1>
             <h2>{user.login}</h2>
           </div>
@@ -67,16 +63,22 @@ const LeftMenu = (props: any) => {
       <style jsx>
         {`
           .container {
-            width: 100%;
-            height: 100%;
+            width: calc(100% - 1px);
+            height: calc(100% - 1px);
             border-top: 1px solid ${Colors.font.main};
             border-right: 1px solid ${Colors.font.main};
-            {/* background: rgba(50, 0, 0, 0.2); */}
+            background: ${Colors.background[300]}F7;
+            border-radius: 0px 0px 0px 10px;
+             {
+              /* background: rgba(50, 0, 0, 0.2); */
+            }
           }
           .top {
             width: 100%;
             height: 70px;
-            {/* background: rgba(50, 50, 0, 0.3); */}
+             {
+              /* background: rgba(50, 50, 0, 0.3); */
+            }
             display: flex;
             flex-direction: row;
             justify-content: flex-start;
@@ -100,7 +102,8 @@ const LeftMenu = (props: any) => {
             justify-content: center;
             gap: 4px;
           }
-          .user-title h1,h2 {
+          .user-title h1,
+          h2 {
             margin-left: 10px;
             color: ${Colors.font.hightlight};
           }
@@ -118,7 +121,9 @@ const LeftMenu = (props: any) => {
           .bottom {
             width: 100%;
             height: 70px;
-            background: rgba(50, 50, 0, 0.3);
+             {
+              /* background: rgba(50, 50, 0, 0.3); */
+            }
           }
         `}
       </style>

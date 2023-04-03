@@ -1,6 +1,5 @@
-import Colors from "@/assets/theming/colors";
-import { useContent } from "@/hooks/main-menu";
-
+import Colors from '@/assets/theming/colors';
+import { useContent } from '@/hooks/main-menu';
 
 const Content = (props: any) => {
   const { content } = useContent();
@@ -11,9 +10,11 @@ const Content = (props: any) => {
       <style jsx>
         {`
           .content {
-            width: 100%;
-            height: 100%;
+            width: calc(100% - 1px);
+            height: calc(100% - 1px);
+            background: ${Colors.background[300]};
             border-top: 1px solid ${Colors.font.main};
+            border-radius: 0px 0px 9px 0px;
           }
         `}
       </style>

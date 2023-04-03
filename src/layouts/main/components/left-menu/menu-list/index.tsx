@@ -48,7 +48,7 @@ const Menu = ({ items }: MenuProps) => {
             id={item.id}
             onClick={() => handleClick(item)}
             style={{
-              background: state.activeId === item.id ? Colors.background[200] : Colors.background[300],
+              background: state.activeId === item.id ? `${Colors.background[200]}E6` : `transparent`,
             }}>
             <div className='icon'>{item.icon}</div>
             <p>{item.label}</p>

@@ -1,12 +1,12 @@
 import css from 'styled-jsx/css';
 
-const styles = ({props}: any) => {
+const styles = ({ props }: any) => {
   return css`
     .header {
       height: 32px;
       width: 100%;
       border-radius: 8px 8px 0px 0px;
-      background: ${props.Colors.background['200']};
+      background: ${props.Colors.background['200']}e7;
       display: flex;
       flex-direction: row;
       align-items: center;
