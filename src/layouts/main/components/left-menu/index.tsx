@@ -116,6 +116,7 @@ const LeftMenu = (props: any) => {
           .menu {
             width: 100%;
             height: calc(100% - 140px);
+            min-width: 215px;
           }
 
           .bottom {
