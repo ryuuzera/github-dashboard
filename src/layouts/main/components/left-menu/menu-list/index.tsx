@@ -1,9 +1,11 @@
 import Colors from '@/assets/theming/colors';
 import { ContentProvider, useContent } from '@/hooks/main-menu';
+import { useUser } from '@/hooks/user';
+import Dashboard from '@/layouts/dashboard';
+import UserReadMe from '@/layouts/user-readme';
 import { Github } from 'lucide-react';
 import { ReactNode, useState } from 'react';
 import styles from './styles';
-import Dashboard from '@/layouts/dashboard';
 
 interface MenuItemProps {
   id: string;
@@ -65,6 +67,7 @@ const Menu = ({ items }: MenuProps) => {
 };
 
 const MenuList = () => {
+  const { currentUser } = useUser();
   const { setContent } = useContent();
 
   const handleClick = (id: string, content: ReactNode) => {
@@ -75,13 +78,13 @@ const MenuList = () => {
     {
       id: 'dashboard',
       label: 'dashboard',
-      onClick: () => handleClick('dashboard', (<Dashboard />)),
+      onClick: () => handleClick('dashboard', <Dashboard />),
       icon: <Github color={Colors.font.main} />,
     },
     {
       id: 'readme',
       label: 'user readme',
-      onClick: () => handleClick('teste', <UserReadMe />),
+      onClick: () => handleClick('readme', <UserReadMe user={currentUser} />),
       icon: <Github color={Colors.font.main} />,
     },
   ];

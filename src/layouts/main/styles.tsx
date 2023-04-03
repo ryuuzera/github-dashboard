@@ -48,12 +48,12 @@ export default css`
   .left-side {
     width: 30%;
     max-width: 230px;
+    min-witdh: 230px;
     height: 100%;
   }
   .right-side {
     width: 100%;
     height: 100%;
-    
   }
 
   @media (max-width: 768px) {

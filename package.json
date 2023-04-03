@@ -26,6 +26,7 @@
     "axios": "^1.3.4",
     "chart.js": "^4.2.1",
     "cheerio": "^1.0.0-rc.12",
+    "github-markdown-css": "^5.2.0",
     "js-yaml": "^4.1.0",
     "lucide-react": "^0.129.0",
     "next": "13.2.4",
@@ -37,6 +38,9 @@
     "react-github-calendar": "^3.4.0",
     "react-icons": "^4.8.0",
     "react-markdown": "^8.0.6",
+    "rehype-raw": "^6.1.1",
+    "remark-gfm": "^3.0.1",
+    "remark-mdx": "^2.3.0",
     "shiki": "^0.14.1",
     "stitches": "^1.2.11",
     "typescript": "5.0.3"
