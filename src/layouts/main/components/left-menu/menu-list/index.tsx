@@ -79,9 +79,9 @@ const MenuList = () => {
       icon: <Github color={Colors.font.main} />,
     },
     {
-      id: 'teste',
-      label: 'teste',
-      onClick: () => handleClick('teste', <>Hello teste</>),
+      id: 'readme',
+      label: 'user readme',
+      onClick: () => handleClick('teste', <UserReadMe />),
       icon: <Github color={Colors.font.main} />,
     },
   ];
