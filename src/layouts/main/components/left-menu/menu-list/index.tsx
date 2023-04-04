@@ -84,7 +84,7 @@ const MenuList = () => {
     {
       id: 'readme',
       label: 'user readme',
-      onClick: () => handleClick('readme', <UserReadMe user={currentUser} />),
+      onClick: () => handleClick('readme', <UserReadMe />),
       icon: <Github color={Colors.font.main} />,
     },
   ];
