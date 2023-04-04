@@ -1,35 +1,40 @@
-import { User } from '@/hooks/user';
+import { useUser } from '@/hooks/user';
 import { GoLocation } from 'react-icons/go';
 import { HiOutlineUserGroup, HiOutlineUsers } from 'react-icons/hi';
 import { IoBusinessOutline } from 'react-icons/io5';
 
-const About = ({ user }: { user: User }) => {
+const About = () => {
+  const { currentUser } = useUser();
   return (
     <>
       <div className='title'>
         <h1>About</h1>
       </div>
       <div className='content'>
-        <div className='bio'>{user.bio}</div>
+        <div className='bio'>{currentUser.bio}</div>
         <ul>
           <li>
             <HiOutlineUsers />
             <h1>followers</h1>
-            {user.followers}
+            {currentUser.followers}
           </li>
           <li>
             <HiOutlineUserGroup />
             <h1>following</h1>
-            {user.following}
+            {currentUser.following}
           </li>
           <li>
             <IoBusinessOutline />
-            <h1>{user.company}</h1>
+            <h1>{currentUser.company}</h1>
           </li>
           <li>
             <GoLocation />
+
             <h1>{user.location}</h1>
             <h1>ignore</h1>
+
+            <h1>{currentUser.location}</h1>
+
           </li>
         </ul>
       </div>
@@ -63,7 +68,9 @@ const About = ({ user }: { user: User }) => {
           display: flex;
           flex-direction: row;
           justify-content: space-evenly;
-          {/* background: pink; */}
+           {
+            /* background: pink; */
+          }
         }
         .content ul li {
           display: flex;

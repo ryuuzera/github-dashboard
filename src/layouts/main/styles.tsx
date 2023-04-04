@@ -30,12 +30,12 @@ export default css`
   .window {
     display: flex;
     flex-direction: column;
-    /* background: ${Colors.background['300']}; */
     border: 0.5px solid ${Colors.font.main};
     height: 80%;
     width: 90%;
     max-width: 1080px;
     min-height: 600px;
+    max-height: 670px;
     z-index: 3;
     border-radius: 12px;
   }
