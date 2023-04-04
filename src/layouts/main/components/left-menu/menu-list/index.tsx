@@ -6,7 +6,8 @@ import UserReadMe from '@/layouts/user-readme';
 import { Github } from 'lucide-react';
 import { ReactNode, useState } from 'react';
 import styles from './styles';
-
+import VSCodeSettings from '@/layouts/vscode-settings';
+import { SiAboutdotme, SiVisualstudiocode } from 'react-icons/si';
 interface MenuItemProps {
   id: string;
   label: string;
@@ -85,8 +86,14 @@ const MenuList = () => {
       id: 'readme',
       label: 'user readme',
       onClick: () => handleClick('readme', <UserReadMe />),
-      icon: <Github color={Colors.font.main} />,
+      icon: <SiAboutdotme />,
     },
+    {
+      id: 'vscode-settings',
+      label: 'vscode settings',
+      onClick: () => handleClick('vscode-settings', <VSCodeSettings />),
+      icon: <SiVisualstudiocode />
+    }
   ];
 
   return (
