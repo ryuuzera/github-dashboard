@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import Loading from '../loading';
 import LanguageList from './components/language-list';
 import PinnedRepoCard from './components/pinned-repos';
+import About from './components/about';
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -95,10 +96,7 @@ const Dashboard = () => {
               )}
 
               <div className='card-information'>
-                <div className='title'>
-                  <h1>About</h1>
-                </div>
-                <div className='content'>{userData.followers}</div>
+                <About />
               </div>
             </div>
           )}
