@@ -42,7 +42,7 @@ export default css`
   .window-content {
     display: flex;
     width: 100%;
-    height: 100%;
+    height: calc(100% - 30px);
     flex-direction: row;
   }
   .left-side {

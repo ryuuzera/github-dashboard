@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react';
 import Loading from '../loading';
 import LanguageList from './components/language-list';
 import PinnedRepoCard from './components/pinned-repos';
-import About from './components/about';
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -77,24 +76,29 @@ const Dashboard = () => {
               <div className='card-languages'>
                 <LanguageList languages={languages} languageColors={languageColors} user={currentUser} />
               </div>
-              <div className='highlights-content'>
-                <h1>{`Highlights `}</h1>
-                <div className='pinned-repos'>
-                  {pinnedRepos.map((repo) => {
-                    return <PinnedRepoCard repo={repo} />;
-                  })}
-                  <div
-                    className='invisible-padding'
-                    style={{
-                      width: '100%',
-                      height: '10px',
-                      background: 'transparent',
-                    }}></div>
+              {pinnedRepos.length > 0 && (
+                <div className='highlights-content'>
+                  <h1>{`Highlights `}</h1>
+                  <div className='pinned-repos'>
+                    {pinnedRepos.map((repo) => {
+                      return <PinnedRepoCard repo={repo} />;
+                    })}
+                    <div
+                      className='invisible-padding'
+                      style={{
+                        width: '100%',
+                        height: '10px',
+                        background: 'transparent',
+                      }}></div>
+                  </div>
                 </div>
-              </div>
+              )}
 
               <div className='card-information'>
-                <About user={currentUser} />
+                <div className='title'>
+                  <h1>About</h1>
+                </div>
+                <div className='content'>{userData.followers}</div>
               </div>
             </div>
           )}
@@ -176,7 +180,17 @@ const Dashboard = () => {
           border-radius: 8px;
           color: ${Colors.font.hightlight};
         }
-       
+        .card-information .title {
+          display: flex;
+          flex-direction: row;
+          margin-top: 10px;
+          margin-left: 10px;
+          width: calc(10% - 10px);
+        }
+        .card-information .title h1 {
+          font-size: 1rem;
+          font-weight: bold;
+        }
       `}</style>
     </>
   );
