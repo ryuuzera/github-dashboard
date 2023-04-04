@@ -29,6 +29,7 @@ const About = ({ user }: { user: User }) => {
           <li>
             <GoLocation />
             <h1>{user.location}</h1>
+            <h1>ignore</h1>
           </li>
         </ul>
       </div>
