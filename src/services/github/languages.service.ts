@@ -8,6 +8,7 @@ export type LanguageMap = Record<string, string>;
 class Languages extends Github {
   //#region public methods
   async getMostUsedLanguages(currentUser: User): Promise<any> {
+    // Fetch all repositories for the current user
     const repos = await request.get(`${currentUser.repos_url}`, {
       headers: {
         Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
@@ -16,29 +17,37 @@ class Languages extends Github {
 
     const tempLanguages: any = {};
 
-    for (const repo of repos.data) {
-      const res = await request.get(`https://api.github.com/repos/${currentUser.login}/${repo.name}/languages`, {
+    const languagePromises = repos.data.map((repo: any) =>
+      request.get(`https://api.github.com/repos/${currentUser.login}/${repo.name}/languages`, {
         headers: {
           Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
         },
-      });
+      })
+    );
 
-      for (const [lang, bytes] of Object.entries(res.data)) {
+    const languageResponses = await Promise.all(languagePromises);
+
+    languageResponses.forEach((res) => {
+      for (const [lang, bytes] of Object.entries<number>(res.data)) {
         tempLanguages[lang] = (tempLanguages[lang] || 0) + bytes;
       }
-    }
+    });
 
-    const totalBytes: any = Object.values(tempLanguages).reduce((total: any, bytes: any) => total + bytes, 0);
+    const totalBytes: number = Object.values<number>(tempLanguages).reduce(
+      (total: number, bytes: number) => total + bytes,
+      0
+    );
 
     const tempLanguagesPercentages: any = {};
-    for (const [lang, bytes] of Object.entries(tempLanguages)) {
-      const percentage = ((bytes as any) / totalBytes) * 100;
+    for (const [lang, bytes] of Object.entries<number>(tempLanguages)) {
+      const percentage = (bytes / totalBytes) * 100;
       tempLanguagesPercentages[lang] = percentage;
     }
 
     const sortedObj = Object.fromEntries(
-      Object.entries(tempLanguagesPercentages).sort(([, a]: any, [, b]): any => (b as any) - a)
+      Object.entries<number>(tempLanguagesPercentages).sort(([, a], [, b]) => b - a)
     );
+
     return sortedObj;
   }
 
@@ -59,6 +68,26 @@ class Languages extends Github {
       }
     }
     return languageColors;
+  }
+
+  async getLanguageFromExtension(extension: string): Promise<string | null> {
+    const response = await request.get(
+      'https://raw.githubusercontent.com/github/linguist/master/lib/linguist/languages.yml'
+    );
+    const languages = yaml.load(response.data.toString()) as Record<string, any>;
+  
+    // Iterate through languages to find the matching extension
+    for (const language in languages) {
+      if (languages.hasOwnProperty(language)) {
+        const extensions = languages[language].extensions;
+        if (extensions && extensions.includes(`.${extension}`)) {
+          return language;
+        }
+      }
+    }
+  
+    // Return null if no matching language is found
+    return null;
   }
   //#endregion
 }

@@ -34,6 +34,7 @@ export default css`
     height: 80%;
     width: 90%;
     max-width: 1080px;
+    min-width: 800px;
     min-height: 600px;
     max-height: 670px;
     z-index: 3;

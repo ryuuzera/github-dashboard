@@ -48,7 +48,6 @@ const MainLayout = (props: any) => {
                   <Content />
                 </div>
               </div>
-              {/* TODO: Add here the main window */}
             </div>
           </div>
         </div>

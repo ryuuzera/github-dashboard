@@ -105,7 +105,7 @@ const LanguageList = ({ languages, languageColors, user }: any) => {
               level0: '#2d333b',
             }}
             labels={{
-              totalCount: `total: {{count}}`,
+              totalCount: `Total: {{count}}`,
             }}
           />
         </div>

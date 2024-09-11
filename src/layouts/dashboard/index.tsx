@@ -5,9 +5,9 @@ import GithubUsers from '@/services/github/github.users.service';
 import Github, { LanguageMap } from '@/services/github/languages.service';
 import { useEffect, useState } from 'react';
 import Loading from '../loading';
+import About from './components/about';
 import LanguageList from './components/language-list';
 import PinnedRepoCard from './components/pinned-repos';
-import About from './components/about';
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -21,47 +21,52 @@ const Dashboard = () => {
     setIsLoading(true);
 
     (async () => {
-      await new Promise(async (resolve) => {
+      await new Promise(async (resolve, reject) => {
         try {
-          const pinnedResposResponse = await new PinnedRepos().getPinnedRepos(currentUser.login);
-          const commitsResponse = await new GithubUsers().getUserCommitsByLogin(currentUser.login);
-          const followersResponse = await new GithubUsers().getUserFollowers(currentUser);
+          const promises = [
+            new PinnedRepos().getPinnedRepos(currentUser.login),
+            new GithubUsers().getUserCommitsByLogin(currentUser.login),
+            new GithubUsers().getUserFollowers(currentUser),
+            new Github().getMostUsedLanguages(currentUser),
+            new Github().getLanguageColors()
+          ];
+
+          const [pinnedResposResponse, commitsResponse, followersResponse, languagesList, colors] = await Promise.all(promises);
 
           const commits = commitsResponse.total_count;
           const followers = followersResponse.length;
 
-          const colors = await new Github().getLanguageColors();
           setLanguagesColors({ ...colors, others: '#444444' });
           setUserData({ commits, followers });
           setPinnedRepos(pinnedResposResponse);
+          let othersPercent = 0;
+          setLanguages({});
+          Object.entries(languagesList).forEach(([language, percentage], index) => {
+            if (index < 6) {
+              setLanguages((current) => {
+                return {
+                  ...current,
+                  [language]: percentage,
+                };
+              });
+            } else if (index === Object.entries(languagesList).length - 1 && othersPercent > 0) {
+              setLanguages((current) => {
+                return {
+                  ...current,
+                  Others: othersPercent + Number(percentage),
+                };
+              });
+            } else {
+              othersPercent = othersPercent + Number(percentage);
+            }
+          });
+
           resolve(true);
         } catch (error) {
           console.log(error);
+          reject();
         }
       });
-      const languagesList = await new Github().getMostUsedLanguages(currentUser);
-      let othersPercent = 0;
-      setLanguages({});
-      Object.entries(languagesList).forEach(([language, percentage], index) => {
-        if (index < 6) {
-          setLanguages((current) => {
-            return {
-              ...current,
-              [language]: percentage,
-            };
-          });
-        } else if (index === Object.entries(languagesList).length - 1 && othersPercent > 0) {
-          setLanguages((current) => {
-            return {
-              ...current,
-              Others: othersPercent + Number(percentage),
-            };
-          });
-        } else {
-          othersPercent = othersPercent + Number(percentage);
-        }
-      });
-
       setIsLoading(false);
     })();
   }, [currentUser]);

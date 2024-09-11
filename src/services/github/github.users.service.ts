@@ -37,8 +37,10 @@ class GithubUsers extends Github {
           Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
         },
       });
-      const decodedContent = Buffer.from(userReadme.data.content, 'base64');
-      return decodedContent.toString();
+      // const decodedContent = Buffer.from(userReadme.data.content, 'base64');
+      // return decodedContent.toString();
+
+      return userReadme.data.html_url;
     } catch (error) {
       return 'not found';
     }

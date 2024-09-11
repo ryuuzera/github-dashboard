@@ -1,5 +1,5 @@
 import { useUser } from '@/hooks/user';
-import request from '@/services/github/github.users.service';
+import axios from 'axios';
 import 'github-markdown-css';
 import { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
@@ -13,7 +13,18 @@ const UserReadMe = () => {
 
   useEffect(() => {
     (async () => {
-      const readme = await new request().getUserReadme(currentUser);
+      // const readme = await new request().getUserReadme(currentUser);
+      const readme = await (async () => {
+        try {
+          return await (
+            await axios.get(
+              `https://raw.githubusercontent.com/${currentUser.login}/${currentUser.login}/main/README.md`
+            )
+          ).data;
+        } catch (error) {
+          return 'not found';
+        }
+      })();
       setReadmeContent(readme);
     })();
   }, [currentUser]);
@@ -115,7 +126,7 @@ const UserReadMe = () => {
               --color-fg-muted: #8b949e;
               --color-fg-subtle: #6e7681;
               --color-canvas-default: #1d2128;
-              --color-canvas-subtle: #161b22;
+              --color-canvas-subtle: #1d2128;
               --color-border-default: #30363d;
               --color-border-muted: #21262d;
               --color-neutral-muted: rgba(110, 118, 129, 0.4);
@@ -123,6 +134,7 @@ const UserReadMe = () => {
               --color-accent-emphasis: #1f6feb;
               --color-attention-subtle: rgba(187, 128, 9, 0.15);
               --color-danger-fg: #f85149;
+              --bgColor-default: #1d2128;
             }
           }
         `}
